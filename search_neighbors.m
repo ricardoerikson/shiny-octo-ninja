@@ -10,9 +10,9 @@ similarity_vector = similarity_matrix(user,:);
 for i=1:max(size(knn))
     
     nn_neighborhood_vector = ratings_matrix(:,item) > 0;
-    nn_similarity_vector = similarity_matrix(i(knn(i)),:);
+    nn_similarity_vector = similarity_matrix(knn(i),:);
     
-    [nn_knn] = nearest_neighbors(nn_similarity_vector,nn_neighborhood_vector);
+    [nn_knn] = nearest_neighbors(k,nn_similarity_vector,nn_neighborhood_vector);
     
     weight_similarity(nn_knn) = weight_similarity(nn_knn) + 1;
     
