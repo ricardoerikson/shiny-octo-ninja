@@ -1,4 +1,4 @@
-function [KNN] = nearest_neighbors(k,similarity_vector,neighborhood)
+function [knn] = nearest_neighbors(k,similarity_vector,neighborhood)
 
 flagValue = -2;
 
@@ -7,7 +7,7 @@ similarity_vector(neighborhood == 0) = flagValue;
 
 size = sum(sortedValues > flagValue);
 if (size >= k)
-    KNN = sortIndex(1:k);
+    knn = sortIndex(1:k);
 else
-    KNN = sortIndex(1:size);
+    knn = sortIndex(1:size);
 end;
