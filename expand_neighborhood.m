@@ -1,4 +1,4 @@
-function [knn,nn_knn,nn_weight] = search_neighbors(k,user,item,similarity_matrix,ratings_matrix)
+function [knn,nn_knn,nn_weight] = expand_neighborhood(k,user,item,similarity_matrix,ratings_matrix)
 
 weight_similarity = zeros(1,size(ratings_matrix,1));
 
