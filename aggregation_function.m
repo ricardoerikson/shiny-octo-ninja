@@ -10,3 +10,5 @@ sum_part = dot(sim_uv,diff);
 k = 1/sum(abs(sim_uv));
 
 prediction = r_ubar + k*sum_part;
+
+end;
