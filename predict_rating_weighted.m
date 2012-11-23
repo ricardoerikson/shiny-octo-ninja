@@ -1,4 +1,4 @@
-function [prediction] = extended_aggregation_function(r_ubar,r_vi,r_vbar,sim_uv,weight)
+function [prediction] = predict_rating_weighted(r_ubar,r_vi,r_vbar,sim_uv,weight)
 
 diff = row(r_vi) - row(r_vbar);
 
