@@ -4,7 +4,7 @@
 %   neighbors (vector)
 %   sim_uv (vector)
 
-function [ r_ubar,r_vbar, r_vi, sim_uv] = aggregation_parameters( user,item,neighbors,ratings_matrix,similarity_matrix )
+function [ r_ubar,r_vbar, r_vi, sim_uv] = get_aggregation_par( user,item,neighbors,ratings_matrix,similarity_matrix )
 
 r_ubar = user_mean(ratings_matrix(user,:));
 n=max(size(neighbors));
