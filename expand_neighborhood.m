@@ -1,4 +1,4 @@
-function [knn,nn_knn,nn_weight] = expand_neighborhood(k,user,item,similarity_matrix,ratings_matrix)
+function [knn,nn_knn,nn_weight] = expand_neighborhood(k,nn_size,user,item,similarity_matrix,ratings_matrix)
 
 weight_similarity = zeros(1,size(ratings_matrix,1));
 
@@ -21,3 +21,10 @@ end;
 [sortedValues,sortIndex] = sort(weight_similarity(:),'descend');
 nn_weight = sortedValues(sortedValues > 0);
 nn_knn = sortIndex(sortedValues > 0);
+
+if (max(size(nn_knn))>nn_size)
+    nn_knn = nn_knn(1:nn_size);
+    nn_weight = nn_weight(1:nn_size);
+end;
+
+end
