@@ -15,7 +15,7 @@ r_vi   = zeros(size(neighbors));
 
 for i=1:n
     r_vbar(i) = user_mean(ratings_matrix(neighbors(i),:));
-    sim_uv(i) = similarity(user,neighbors(i),similarity_matrix);
+    sim_uv(i) = simval(user,neighbors(i),similarity_matrix);
     r_vi(i)   = ratings_matrix(neighbors(i),item);
 end
 
