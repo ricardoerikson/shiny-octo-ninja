@@ -1,4 +1,7 @@
-function [knn] = nearest_neighbors(k,similarity_vector,neighborhood)
+function [knn] = nearest_neighbors(k,user,item,similarity_matrix,ratings_matrix)
+
+similarity_vector = similarity_matrix(user,:);
+neighborhood = ratings_matrix(:,item) > 0;
 
 flagValue = -2;
 
