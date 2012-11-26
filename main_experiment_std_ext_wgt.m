@@ -10,6 +10,8 @@ raw_data = load('dataset/ua.test');
 test_data = raw_data(:,1:3);
 clear raw_data;
 
+
+
 real_value = test_data(:,3);
 prediction_std = zeros(1,max(size(test_data)));
 prediction_ext = zeros(1,max(size(test_data)));
@@ -32,6 +34,10 @@ end;
 
 pos_ext = prediction_ext > 0;
 pos_wgt = prediction_ext_wgt > 0;
+
+rmse_std = rmse(real_value,prediction_std);
+rmse_ext = rmse(real_value(pos_ext),prediction_ext(pos_ext));
+rmse_wgt = rmse(real_value(pos_wgt),prediction_ext_wgt(pos_wgt));
 
 mae_std = mae(real_value,prediction_std);
 mae_ext = mae(real_value(pos_ext),prediction_ext(pos_ext));
