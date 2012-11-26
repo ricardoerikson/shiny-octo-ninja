@@ -7,7 +7,7 @@ weight_similarity = zeros(1,size(ratings_matrix,1));
 if(min(size(knn))>0)
 	for i=1:max(size(knn))
 	    
-	    [ex_knn] = nearest_neighbors(k,knn(i),item,similarity_matrix,ratings_matrix);
+	    [ex_knn] = nearest_neighbors(ex_size,knn(i),item,similarity_matrix,ratings_matrix);
 	    
 	    weight_similarity(ex_knn) = weight_similarity(ex_knn) + 1;
 	    

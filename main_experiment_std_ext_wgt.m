@@ -19,7 +19,7 @@ prediction_ext_wgt = zeros(1,max(size(test_data)));
 
 
 parfor i=1:max(size(test_data))
-	[knn,ex_knn,ex_weight]=expand_neighborhood(10,10,test_data(i,1),test_data(i,2),data.correlation_matrix,data.ratings_matrix);
+	[knn,ex_knn,ex_weight]=expand_neighborhood(20,10,test_data(i,1),test_data(i,2),data.correlation_matrix,data.ratings_matrix);
 
 	if(min(size(knn))>0)
 		[st_r_ubar,st_r_vbar,st_r_vi,st_sim_uv] = get_aggregation_par(test_data(i,1),test_data(i,2),knn,data.ratings_matrix,data.correlation_matrix);
@@ -42,3 +42,5 @@ rmse_wgt = rmse(real_value(pos_wgt),prediction_ext_wgt(pos_wgt));
 mae_std = mae(real_value,prediction_std);
 mae_ext = mae(real_value(pos_ext),prediction_ext(pos_ext));
 mae_wgt = mae(real_value(pos_wgt),prediction_ext_wgt(pos_wgt));
+
+clear prediction_std prediction_ext prediction_ext_wgt data pos_wgt pos_ext real_value test_data;
