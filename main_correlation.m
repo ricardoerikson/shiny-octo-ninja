@@ -18,4 +18,4 @@ parfor i=1:n_users
     end;
 end;
 
-save('dataset/ua_base_data.mat','correlation_matrix','ratings_matrix','-mat');
+save('dataset/ua_base_data_experiment.mat','correlation_matrix','ratings_matrix','-mat');
