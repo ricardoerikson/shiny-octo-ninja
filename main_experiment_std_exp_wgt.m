@@ -4,7 +4,7 @@ clc;
 
 addpath('evaluation','similarity','utils');
 
-data = load('dataset/ua_base_data.mat');
+data = load('dataset/ua_base_data_experiment.mat');
 raw_data = load('dataset/ua.test');
 
 test_data = raw_data(:,1:3);
