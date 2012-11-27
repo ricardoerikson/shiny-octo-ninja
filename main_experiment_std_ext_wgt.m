@@ -10,20 +10,16 @@ raw_data = load('dataset/ua.test');
 test_data = raw_data(:,1:3);
 clear raw_data;
 
-ex_nn_size = [ 5 10 15 20 25];
 nn_size = [5 10 15 20 25];
 
+prediction_std = zeros(max(size(test_data)),max(size(nn_size)),max(size(nn_size)));
+prediction_ext = zeros(max(size(test_data)),max(size(nn_size)),max(size(nn_size)));
+prediction_ext_wgt = zeros(max(size(test_data)),max(size(nn_size)),max(size(nn_size)));
 
-
-real_value = test_data(:,3);
-prediction_std = zeros(max(size(test_data)),max(size(ex_nn_size)),max(size(nn_size)));
-prediction_ext = zeros(max(size(test_data)),max(size(ex_nn_size)),max(size(nn_size)));
-prediction_ext_wgt = zeros(max(size(test_data)),max(size(ex_nn_size)),max(size(nn_size)));
-
-for i=1:max(size(ex_nn_size))
+for i=1:max(size(nn_size))
 	for j=1:max(size(nn_size))
 		parfor k=1:max(size(test_data))
-			[knn,ex_knn,ex_weight]=expand_neighborhood(ex_nn_size(i),nn_size(j),test_data(k,1),test_data(k,2),data.correlation_matrix,data.ratings_matrix);
+			[knn,ex_knn,ex_weight]=expand_neighborhood(nn_size(i),nn_size(j),test_data(k,1),test_data(k,2),data.correlation_matrix,data.ratings_matrix);
 
 			if(min(size(knn))>0)
 				[st_r_ubar,st_r_vbar,st_r_vi,st_sim_uv] = get_aggregation_par(test_data(k,1),test_data(k,2),knn,data.ratings_matrix,data.correlation_matrix);
