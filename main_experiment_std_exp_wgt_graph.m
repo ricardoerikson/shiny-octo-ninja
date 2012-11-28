@@ -39,3 +39,8 @@ for i=1:nn_size
 		mae_values(3,i,j) = mae(sel_real_wgt,sel_predict_wgt);
 	end;
 end;
+
+figure(1);
+plot(nn_values,rmse_values(:,:,1),'-s');
+xlabel('Tamanho da Vizinhança (kNN).');
+ylabel('RMSE');
