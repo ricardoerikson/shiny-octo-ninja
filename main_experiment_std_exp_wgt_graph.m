@@ -42,41 +42,45 @@ for i=1:s_nn
 	end;
 end;
 
-hFig = figure(1);
-set(hFig, 'Position', [50 100 1000 250]);
+for i=1:5
 
-subplot(1,3,1);
-plot(exp_values,rmse_values(1,:,1),'-.k');
-hold all;
-plot(exp_values,rmse_values(2,:,1),'-r');
-hold all;
-plot(exp_values,rmse_values(3,:,1),':b');
-hleg = legend('kNN','exp-kNN','exp-kNN+wgt',...
-              'Location','NorthEast');
-set(hleg,'FontAngle','italic');
-xlabel('Vizinhança (exp-kNN).');
-ylabel('RMSE');
-hold all;
-annotation('textbox', [.02 .5 .1 .1], 'String', 'k=5','EdgeColor','none');
+	hFig = figure(i);
+	set(hFig, 'Position', [50 100 1000 250]);
 
-subplot(1,3,2);
-plot(exp_values,mae_values(1,:,1),'-.k');
-hold all;
-plot(exp_values,mae_values(2,:,1),'-r');
-hold all;
-plot(exp_values,mae_values(3,:,1),':b');
-hleg = legend('kNN','exp-kNN','exp-kNN+wgt',...
-              'Location','NorthEast');
-set(hleg,'FontAngle','italic');
-xlabel('Vizinhança (exp-kNN).');
-ylabel('MAE');
+	subplot(1,3,1);
+	plot(exp_values,rmse_values(1,:,i),'-.k');
+	hold all;
+	plot(exp_values,rmse_values(2,:,i),'-r');
+	hold all;
+	plot(exp_values,rmse_values(3,:,i),':b');
+	hleg = legend('kNN','exp-kNN','exp-kNN+wgt',...
+		'Location','NorthEast');
+	set(hleg,'FontAngle','italic');
+	xlabel('Vizinhança (exp-kNN).');
+	ylabel('RMSE');
+	hold all;
+	annotation('textbox', [.03 .5 .1 .1], 'String', ['k=',num2str(nn_values(i))],'EdgeColor','none');
 
-subplot(1,3,3);
-plot(exp_values,data.mean_correlation(1,:,1),'-ok');
-hold all;
-plot(exp_values,data.mean_correlation(2,:,1),'-*r');
-hleg = legend('kNN','exp-kNN',...
-              'Location','East');
-set(hleg,'FontAngle','italic');
-xlabel('Vizinhança (exp-kNN).');
-ylabel('Valor médio de correlação');
+	subplot(1,3,2);
+	plot(exp_values,mae_values(1,:,i),'-.k');
+	hold all;
+	plot(exp_values,mae_values(2,:,i),'-r');
+	hold all;
+	plot(exp_values,mae_values(3,:,i),':b');
+	hleg = legend('kNN','exp-kNN','exp-kNN+wgt',...
+		'Location','NorthEast');
+	set(hleg,'FontAngle','italic');
+	xlabel('Vizinhança (exp-kNN).');
+	ylabel('MAE');
+
+	subplot(1,3,3);
+	plot(exp_values,data.mean_correlation(1,:,i),'-ok');
+	hold all;
+	plot(exp_values,data.mean_correlation(2,:,i),'-*r');
+	hleg = legend('kNN','exp-kNN',...
+		'Location','East');
+	set(hleg,'FontAngle','italic');
+	xlabel('Vizinhança (exp-kNN).');
+	ylabel('Valor médio de correlação');
+
+end;
