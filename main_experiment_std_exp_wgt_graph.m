@@ -24,13 +24,18 @@ for i=1:nn_size
 		prediction_exp = data.predict_exp(:,i,j);
 		prediction_wgt = data.predict_wgt(:,i,j);
 
+		sel_predict_exp = prediction_exp(prediction_exp>0);
+		sel_predict_wgt = prediction_wgt(prediction_wgt>0);
+
+		sel_real_exp = data.real_values(prediction_exp>0);
+		sel_real_wgt = data.real_values(prediction_wgt>0);
+
 		rmse_values(1,i,j) = rmse(data.real_values,prediction_std);
-		rmse_values(2,i,j) = rmse(data.real_values,prediction_exp);
-		rmse_values(3,i,j) = rmse(data.real_values,prediction_wgt);
+		rmse_values(2,i,j) = rmse(sel_real_exp,sel_predict_exp);
+		rmse_values(3,i,j) = rmse(sel_real_wgt,sel_predict_wgt);
 
 		mae_values(1,i,j) = mae(data.real_values,prediction_std);
-		mae_values(2,i,j) = mae(data.real_values,prediction_exp);
-		mae_values(3,i,j) = mae(data.real_values,prediction_wgt);
+		mae_values(2,i,j) = mae(sel_real_exp,sel_predict_exp);
+		mae_values(3,i,j) = mae(sel_real_wgt,sel_predict_wgt);
 	end;
 end;
-
