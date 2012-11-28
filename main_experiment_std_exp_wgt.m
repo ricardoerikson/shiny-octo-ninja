@@ -16,6 +16,8 @@ prediction_std = zeros(max(size(test_data)),max(size(nn_size)),max(size(nn_size)
 prediction_exp = zeros(max(size(test_data)),max(size(nn_size)),max(size(nn_size)));
 prediction_wgt = zeros(max(size(test_data)),max(size(nn_size)),max(size(nn_size)));
 
+% i = size(knn): k neares neighbors size;
+% j = size(exp_knn): expanded neighborhood size;
 for i=1:max(size(nn_size))
 	for j=1:max(size(nn_size))
 		parfor k=1:max(size(test_data))
