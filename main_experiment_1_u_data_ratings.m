@@ -15,7 +15,10 @@ training_set = cell(n_users,1);
 parfor i=1:n_users
 
 	all_observed = find(data.ratings_matrix(i,:) > 0);
-	[sortedValues,sortedIndexes] = sort(all_observed,'descend');
+	observed_positions = data.ratings_matrix(i,:) > 0;
+	all_values = data.ratings_matrix(i,observed_positions);
+
+	[sortedValues,sortedIndexes] = sort(all_values,'descend');
 	all_observed_sorted = all_observed(sortedIndexes);
 
 	n_observed = max(size(all_observed_sorted));
