@@ -9,15 +9,21 @@ data = load('dataset/u_data_pearson_correlation.mat');
 n_users = 943;
 n_items = 1682;
 
-relevant_items = cell(n_users,1);
+probe_set = cell(n_users,1);
+training_set = cell(n_users,1);
 
-for i=1:n_users
-	members = ismember([4 5],data.ratings_matrix(i,:));
-	positions = find(members==1);
-	n_highest = size(positions);
-	xseq = randperm(n_highest);
-	n_relevant = round(0.7*n_highest);
+parfor i=1:n_users
 
-	relevant_set = positions(xseq(1:n_relevant));
-	relevant_items{i} = relevant_set;
+	all_observed = find(data.ratings_matrix(i,:) > 0);
+	[sortedValues,sortedIndexes] = sort(all_observed,'descend');
+	all_observed_sorted = all_observed(sortedIndexes);
+
+	n_observed = max(size(all_observed_sorted));
+	n_half = round(0.5*n_observed);
+	xseq = randperm(n_half);
+	n_probe = round(0.4*n_half);
+
+	probe_set{i} = all_observed_sorted(xseq(1:n_probe));
+	training_set{i} = cat(2,all_observed_sorted(xseq(n_probe+1:end)),all_observed_sorted(n_half+1:end));
+
 end;
