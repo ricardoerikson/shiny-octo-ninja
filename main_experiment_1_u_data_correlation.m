@@ -23,12 +23,11 @@ parfor i=1:n_users
 	all_observed_sorted = all_observed(sortedIndexes);
 
 	n_observed = max(size(all_observed_sorted));
-	n_half = round(0.5*n_observed);
-	xseq = randperm(n_half);
-	n_probe = round(0.4*n_half);
 
-	probe_set{i} = all_observed_sorted(xseq(1:n_probe));
-	training_set{i} = cat(2,all_observed_sorted(xseq(n_probe+1:end)),all_observed_sorted(n_half+1:end));
+	ten_pc = 0.1*n_observed;
+
+	probe_set{i} = all_observed_sorted(1:ten_pc);
+	training_set{i} = all_observed_sorted(ten_pc+1:end);
 
 	non_observed = find(ratings_matrix(i,:)==0);
 	non_observed_set{i} = non_observed;
