@@ -19,7 +19,6 @@ s_ex = max(size(ex_values));
 
 predictions_std = cell(s_ex,s_nn);
 
-user = 1;
 for nn=1:s_nn
 	for ex=1:s_ex
 		predictions = sparse(zeros(n_users,n_items));
@@ -31,12 +30,10 @@ for nn=1:s_nn
 					predictions(i,j) = predict_rating(i,j,knn,training_ratings,training_correlation);
 				end;
 			end;
-			disp(['std -- ',num2str(nn),' x ',num2str(ex),' user-',num2str(user)]);
-			user = user + 1;
+			disp(['std -- ',num2str(nn),' x ',num2str(ex),' user-',num2str(i)]);
 		end;
 		predictions_std{ex,nn} = predictions;
 		clear predictions;
-		user = 1;
 	end;
 end;
 
@@ -47,7 +44,6 @@ clear predictions_std;
 
 predictions_wgt = cell(s_ex,s_nn);
 
-user = 1;
 for nn=1:s_nn
 	for ex=1:s_ex
 		predictions = sparse(zeros(n_users,n_items));
@@ -59,12 +55,10 @@ for nn=1:s_nn
 					predictions(i,j) = predict_rating(i,j,ex_knn,training_ratings,training_correlation,ex_weight);
 				end;
 			end;
-			disp(['wgt -- ',num2str(nn),' x ',num2str(ex),' user-',num2str(user)]);
-			user = user + 1;
+			disp(['wgt -- ',num2str(nn),' x ',num2str(ex),' user-',num2str(i)]);
 		end;
 		predictions_wgt{ex,nn} = predictions;
 		clear predictions;
-		user = 1;
 	end;
 end;
 
@@ -75,7 +69,6 @@ clear predictions_wgt;
 
 predictions_exp = cell(s_ex,s_nn);
 
-user = 1;
 for nn=1:s_nn
 	for ex=1:s_ex
 		predictions = sparse(zeros(n_users,n_items));
@@ -87,12 +80,10 @@ for nn=1:s_nn
 					predictions(i,j) = predict_rating(i,j,ex_knn,training_ratings,training_correlation);
 				end;
 			end;
-			disp(['exp -- ',num2str(nn),' x ',num2str(ex),' user-',num2str(user)]);
-			user = user + 1;
+			disp(['exp -- ',num2str(nn),' x ',num2str(ex),' user-',num2str(i)]);
 		end;
 		predictions_exp{ex,nn} = predictions;
 		clear predictions;
-		user = 1;
 	end;
 end;
 
