@@ -10,36 +10,91 @@ n_users = 943;
 n_items = 1682;
 
 nn_values = [ 5 10 15 20 25 ];
-exp_values = 4:2:30;
+ex_values = 4:2:30;
 
-nnn_values = max(size(nn_values));
-nexp_values = max(size(exp_values));
+s_nn = max(size(nn_values));
+s_ex = max(size(ex_values));
 
-predictions_std = zeros(n_users,n_items,nexp_values,nnn_values);
-predictions_exp = zeros(n_users,n_items,nexp_values,nnn_values);
-predictions_wgt = zeros(n_users,n_items,nexp_values,nnn_values);
+% STANDARD PREDICTION
 
-for nn=1:max(size(nn_values))
-	for ex=1:max(size(exp_values))
-		for i=1:n_users
+predictions_std = cell(s_ex,s_nn);
+
+user = 1;
+for nn=1:s_nn
+	for ex=1:s_ex
+		predictions = sparse(zeros(n_users,n_items));
+		parfor i=1:n_users
 			for j=1:n_items
 
-				[knn,ex_knn,ex_weight]=expand_neighborhood(nn_values(nn),exp_values(ex),i,j,training_correlation,training_ratings);
+				[knn,ex_knn,ex_weight]=expand_neighborhood(nn_values(nn),ex_values(ex),i,j,training_correlation,training_ratings);
 				if(max(size(knn))>0)
-					std_rating = predict_rating(i,j,knn,training_ratings,training_correlation);
-					exp_rating = predict_rating(i,j,ex_knn,training_ratings,training_correlation);
-					wgt_rating = predict_rating_weighted(i,j,ex_knn,training_ratings,training_correlation,ex_weight);
-
-					predictions_std(i,j,ex,nn) = std_rating;
-					predictions_exp(i,j,ex,nn) = exp_rating;
-					predictions_wgt(i,j,ex,nn) = wgt_rating;
-
+					predictions(i,j) = predict_rating(i,j,knn,training_ratings,training_correlation);
 				end;
-
 			end;
+			disp(['std -- ',num2str(nn),' x ',num2str(ex),' user-',num2str(user)]);
+			user = user + 1;
 		end;
-
+		predictions_std{ex,nn} = predictions;
+		clear predictions;
+		user = 1;
 	end;
 end;
 
-save('dataset/u_data_experiment_1_predictions.mat','predictions_wgt','predictions_exp','predictions_std','-mat');
+save('dataset/experiment1/std/u_data_predictions_std.mat','predictions_std','-mat');
+clear predictions_std;
+
+% EXPANDED PREDICTION
+
+predictions_wgt = cell(s_ex,s_nn);
+
+user = 1;
+for nn=1:s_nn
+	for ex=1:s_ex
+		predictions = sparse(zeros(n_users,n_items));
+		parfor i=1:n_users
+			for j=1:n_items
+
+				[knn,ex_knn,ex_weight]=expand_neighborhood(nn_values(nn),ex_values(ex),i,j,training_correlation,training_ratings);
+				if(max(size(knn))>0)
+					predictions(i,j) = predict_rating(i,j,ex_knn,training_ratings,training_correlation,ex_weight);
+				end;
+			end;
+			disp(['wgt -- ',num2str(nn),' x ',num2str(ex),' user-',num2str(user)]);
+			user = user + 1;
+		end;
+		predictions_wgt{ex,nn} = predictions;
+		clear predictions;
+		user = 1;
+	end;
+end;
+
+save('dataset/experiment1/wgt/u_data_predictions_wgt.mat','predictions_wgt','-mat');
+clear predictions_wgt;
+
+% WEIGHTED PREDICTION
+
+predictions_exp = cell(s_ex,s_nn);
+
+user = 1;
+for nn=1:s_nn
+	for ex=1:s_ex
+		predictions = sparse(zeros(n_users,n_items));
+		parfor i=1:n_users
+			for j=1:n_items
+
+				[knn,ex_knn,ex_weight]=expand_neighborhood(nn_values(nn),ex_values(ex),i,j,training_correlation,training_ratings);
+				if(max(size(knn))>0)
+					predictions(i,j) = predict_rating(i,j,ex_knn,training_ratings,training_correlation);
+				end;
+			end;
+			disp(['exp -- ',num2str(nn),' x ',num2str(ex),' user-',num2str(user)]);
+			user = user + 1;
+		end;
+		predictions_exp{ex,nn} = predictions;
+		clear predictions;
+		user = 1;
+	end;
+end;
+
+save('dataset/experiment1/exp/u_data_predictions_exp.mat','predictions_exp','-mat');
+clear predictions_exp;
