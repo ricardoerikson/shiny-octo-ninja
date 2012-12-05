@@ -19,7 +19,7 @@ s_ex = max(size(ex_values));
 
 % EXPANDED PREDICTION
 
-for nn=1:s_nn
+for nn=2:s_nn
 	predictions_exp = cell(s_ex,1);
 	for ex=1:s_ex
 		disp(['exp -- ',num2str(nn),' x ',num2str(ex)]);

@@ -29,7 +29,7 @@ for nn=1:s_nn
 
 				[knn,ex_knn,ex_weight]=expand_neighborhood(nn_values(nn),ex_values(ex),i,j,training_correlation,training_ratings);
 				if(max(size(knn))>0)
-					predictions(i,j) = predict_rating(i,j,ex_knn,training_ratings,training_correlation,ex_weight);
+					predictions(i,j) = predict_rating_weighted(i,j,ex_knn,training_ratings,training_correlation,ex_weight);
 				end;
 			end;
 			
