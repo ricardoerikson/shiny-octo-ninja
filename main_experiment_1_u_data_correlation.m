@@ -16,18 +16,13 @@ non_observed_set = cell(n_users,1);
 parfor i=1:n_users
 
 	all_observed = find(ratings_matrix(i,:) > 0);
-	observed_positions = ratings_matrix(i,:) > 0;
-	all_values = ratings_matrix(i,observed_positions);
+	n_observed = max(size(all_observed));
+	n_probe = round(0.2*n_observed);
 
-	[sortedValues,sortedIndexes] = sort(all_values,'descend');
-	all_observed_sorted = all_observed(sortedIndexes);
+	xseq = randperm(n_observed);
 
-	n_observed = max(size(all_observed_sorted));
-
-	ten_pc = 0.1*n_observed;
-
-	probe_set{i} = all_observed_sorted(1:ten_pc);
-	training_set{i} = all_observed_sorted(ten_pc+1:end);
+	probe_set{i} = all_observed(xseq(1:n_probe));
+	training_set{i} = all_observed(xseq(n_probe+1:end));
 
 	non_observed = find(ratings_matrix(i,:)==0);
 	non_observed_set{i} = non_observed;
