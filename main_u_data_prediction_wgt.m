@@ -4,9 +4,7 @@ clc;
 
 configure
 
-start = clock;
-
-load('dataset/u_data_experiment_1.mat');
+load(['dataset/' experiment_name '/u_data.mat']);
 
 n_users = 943;
 n_items = 1682;
@@ -25,11 +23,13 @@ for nn=1:s_nn
 		disp(['wgt -- ',num2str(nn),' x ',num2str(ex)]);
 		predictions = sparse(zeros(n_users,n_items));
 		parfor i=1:n_users
+			items_set = probe_set{i};
 			for j=1:n_items
-
-				[knn,ex_knn,ex_weight]=expand_neighborhood(nn_values(nn),ex_values(ex),i,j,training_correlation,training_ratings);
-				if(max(size(knn))>0)
-					predictions(i,j) = predict_rating_weighted(i,j,ex_knn,training_ratings,training_correlation,ex_weight);
+				if(ismember([j],items_set))
+					[knn,ex_knn,ex_weight]=expand_neighborhood(nn_values(nn),ex_values(ex),i,j,training_correlation,training_ratings);
+					if(max(size(knn))>0)
+						predictions(i,j) = predict_rating_weighted(i,j,ex_knn,training_ratings,training_correlation,ex_weight);
+					end;
 				end;
 			end;
 			
@@ -37,8 +37,6 @@ for nn=1:s_nn
 		predictions_wgt{ex} = predictions;
 		clear predictions;
 	end;
-	save(['dataset/experiment1/u_data_predictions_wgt',num2str(nn),'.mat'],'predictions_wgt','-mat');
+	save(['dataset/' experiment_name '/u_data_predictions_wgt',num2str(nn),'.mat'],'predictions_wgt','-mat');
 	clear predictions_wgt;
 end;
-
-finish = clock;

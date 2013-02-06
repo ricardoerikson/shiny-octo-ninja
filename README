@@ -1,0 +1,15 @@
+# Experimento 2
+
+Base utilizada: MovieLens 100k (u.data)
+
+Configuração do experimento:
+- Dados de Treinamento: 50%
+- Dados de Teste: 50%
+- Tamanhos de vizinhança para k-vizinhos mais próximos: [5 15 25]
+- Tamanhos de vizinhança para vizinhança estendida: [5 10 15 20 25 30]
+
+Métodos utilizados:
+- Método padrão de agregação utilizando os k-vizinhos mais próximos
+- Método padrão de agregação utilizando a vizinhança estendida
+- Método de agregação adaptado para utilizar uma vizinhança com pesos
+
