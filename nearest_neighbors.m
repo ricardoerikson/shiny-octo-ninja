@@ -1,10 +1,18 @@
-function [KNN] = nearest_neighbors(k,pos,similarity_vector)
+function [knn,sim] = nearest_neighbors(k,user,item,similarity_matrix,ratings_matrix)
 
+similarity_vector = similarity_matrix(user,:);
+neighborhood = ratings_matrix(:,item) > 0;
+
+flagValue = -2;
+
+similarity_vector(neighborhood == 0) = flagValue;
 [sortedValues,sortIndex] = sort(similarity_vector(:),'descend');
-self_similarity = (sortIndex == pos);
-neighbors = sortIndex(self_similarity == 0);
-if(max(size(neighbors))>k)
-    KNN = neighbors(1:k);
+
+size = sum(sortedValues > flagValue);
+if (size >= k)
+    knn = sortIndex(1:k);
+	sim = sortedValues(1:k);
 else
-    KNN = neighbors;
+    knn = sortIndex(1:size);
+	sim = sortedValues(1:size);
 end;
