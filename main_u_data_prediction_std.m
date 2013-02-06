@@ -4,9 +4,7 @@ clc;
 
 configure
 
-start = clock;
-
-load('dataset/u_data_experiment_1.mat');
+load(['dataset/' experiment_name '/u_data.mat']);
 
 n_users = 943;
 n_items = 1682;
@@ -23,11 +21,16 @@ for nn=1:s_nn
 	predictions = sparse(zeros(n_users,n_items));
 	parfor i=1:n_users
 		disp(['std -- ',num2str(nn),' x ',num2str(i)]);
+		items_set = probe_set{i};
 		for j=1:n_items
-			[knn]=nearest_neighbors(nn_values(nn),i,j,training_correlation,training_ratings);
-			if(max(size(knn))>0)
-				predictions(i,j) = predict_rating(i,j,knn,training_ratings,training_correlation);
-			end;
+			if(ismember([j],items_set))
+				[knn]=nearest_neighbors(nn_values(nn),i,j,training_correlation,training_ratings);
+				if(max(size(knn))>0)
+					predictions(i,j) = predict_rating(i,j,knn,training_ratings,training_correlation);
+	 			end;
+	 		else
+	 			continue;
+	 		end;
 		end;
 
 	end;
@@ -35,7 +38,7 @@ for nn=1:s_nn
 	clear predictions;
 end;
 
-save(['dataset/experiment1/u_data_predictions_std.mat'],'predictions_std','-mat');
+save(['dataset/' experiment_name '/u_data_predictions_std.mat'],'predictions_std','-mat');
 clear predictions_std;
 
 finish = clock;
