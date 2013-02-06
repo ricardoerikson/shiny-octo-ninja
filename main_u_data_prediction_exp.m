@@ -4,9 +4,7 @@ clc;
 
 configure
 
-start = clock;
-
-load('dataset/u_data_experiment_1.mat');
+load(['dataset/' experiment_name '/u_data.mat']);
 
 n_users = 943;
 n_items = 1682;
@@ -23,13 +21,17 @@ for nn=1:s_nn
 	predictions_exp = cell(s_ex,1);
 	for ex=1:s_ex
 		disp(['exp -- ',num2str(nn),' x ',num2str(ex)]);
-		predictions = sparse(zeros(n_users,n_items));
+		predictions = zeros(n_users,n_items);
 		parfor i=1:n_users
+			items_set = probe_set{i};
 			for j=1:n_items
-
-				[knn,ex_knn,ex_weight]=expand_neighborhood(nn_values(nn),ex_values(ex),i,j,training_correlation,training_ratings);
-				if(max(size(knn))>0)
-					predictions(i,j) = predict_rating(i,j,ex_knn,training_ratings,training_correlation);
+				if(ismember([j],items_set))
+					[knn,ex_knn,ex_weight]=expand_neighborhood(nn_values(nn),ex_values(ex),i,j,training_correlation,training_ratings);
+					if(max(size(knn))>0)
+						predictions(i,j) = predict_rating(i,j,ex_knn,training_ratings,training_correlation);
+					end;
+				else
+					continue;
 				end;
 			end;
 			
@@ -37,8 +39,6 @@ for nn=1:s_nn
 		predictions_exp{ex} = predictions;
 		clear predictions;
 	end;
-	save(['dataset/experiment1/u_data_predictions_exp',num2str(nn),'.mat'],'predictions_exp','-mat');
+	save(['dataset/' experiment_name '/u_data_predictions_exp',num2str(nn),'.mat'],'predictions_exp','-mat');
 	clear predictions_exp;
 end;
-
-finish = clock;
