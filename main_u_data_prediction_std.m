@@ -18,7 +18,7 @@ s_nn = max(size(nn_values));
 predictions_std = cell(s_nn,1);
 
 for nn=1:s_nn
-	predictions = sparse(zeros(n_users,n_items));
+	predictions = zeros(n_users,n_items);
 	parfor i=1:n_users
 		disp(['std -- ',num2str(nn),' x ',num2str(i)]);
 		items_set = probe_set{i};
@@ -40,5 +40,3 @@ end;
 
 save(['dataset/' experiment_name '/u_data_predictions_std.mat'],'predictions_std','-mat');
 clear predictions_std;
-
-finish = clock;
