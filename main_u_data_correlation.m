@@ -8,7 +8,7 @@ mkdir(['dataset/' experiment_name]);
 
 % Configuração: 20% treinamento e 80% teste
 
-p_training = 0.5;
+p_training = 0.2;
 p_probe = 0.8;
 
 n_users = 943;
