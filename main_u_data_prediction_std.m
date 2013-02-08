@@ -21,9 +21,8 @@ for nn=1:s_nn
 	predictions = zeros(n_users,n_items);
 	parfor i=1:n_users
 		disp(['std -- ',num2str(nn),' x ',num2str(i)]);
-		items_set = probe_set{i};
 		for j=1:n_items
-			if(ismember([j],items_set))
+			if(ismember([j],probe_set{i}) || ismember([j],non_observed_set{i}))
 				[knn]=nearest_neighbors(nn_values(nn),i,j,training_correlation,training_ratings);
 				if(max(size(knn))>0)
 					predictions(i,j) = predict_rating(i,j,knn,training_ratings,training_correlation);

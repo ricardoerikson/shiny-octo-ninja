@@ -23,9 +23,8 @@ for nn=1:s_nn
 		disp(['exp -- ',num2str(nn),' x ',num2str(ex)]);
 		predictions = zeros(n_users,n_items);
 		parfor i=1:n_users
-			items_set = probe_set{i};
 			for j=1:n_items
-				if(ismember([j],items_set))
+				if(ismember([j],probe_set{i}) || ismember([j],non_observed_set{i}))
 					[knn,ex_knn,ex_weight]=expand_neighborhood(nn_values(nn),ex_values(ex),i,j,training_correlation,training_ratings);
 					if(max(size(knn))>0)
 						predictions(i,j) = predict_rating(i,j,ex_knn,training_ratings,training_correlation);
