@@ -6,10 +6,10 @@ configure
 
 mkdir(['dataset/' experiment_name]);
 
-% Configuração: 20% treinamento e 80% teste
+% Configuração: 50% treinamento e 50% teste
 
-p_training = 0.2;
-p_probe = 0.8;
+p_training = 0.5;
+p_probe = 0.5;
 
 n_users = 943;
 n_items = 1682;
