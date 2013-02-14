@@ -1,6 +1,9 @@
 
 % Calculating similarity
 configure;
+
+n_users = 943;
+n_items = 1682;
 mkdir(['dataset/' experiment_name]);
 load('dataset/u_data_t80_p20.mat');
 [training_correlation,training_ratings] = correlation('dataset/u.data',n_users,n_items,1,probe_set);
