@@ -9,7 +9,7 @@ load(['dataset/' experiment_name '/u_data.mat']);
 n_users = 943;
 n_items = 1682;
 
-nn_values = 5:5:30;
+nn_values = [5 10 20 30];
 
 s_nn = max(size(nn_values));
 

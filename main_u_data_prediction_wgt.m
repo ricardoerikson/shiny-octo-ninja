@@ -10,7 +10,7 @@ n_users = 943;
 n_items = 1682;
 
 nn_values = [ 5 15 25 ];
-ex_values = 5:5:30;
+ex_values = [5 10 20 30];
 
 s_nn = max(size(nn_values));
 s_ex = max(size(ex_values));
