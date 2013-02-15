@@ -1,2 +1,2 @@
 addpath('similarity','evaluation','utils');
-experiment_name = 'experiment_5';
+experiment_name = 'experiment_6';
