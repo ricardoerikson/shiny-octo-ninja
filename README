@@ -1,10 +1,11 @@
-# Experimento 5
+# Experimento 7 and 8
 
 Base utilizada: MovieLens 100k (u.data)
+Usando PCC e Cosseno
 
 Configuração do experimento:
-- Dados de Treinamento: 20%
-- Dados de Teste: 80%
+- Dados de Treinamento: 90%
+- Dados de Teste: 10%
 - Tamanhos de vizinhança para k-vizinhos mais próximos: [5 15 25]
 - Tamanhos de vizinhança para vizinhança estendida: [5 10 20 30]
 
